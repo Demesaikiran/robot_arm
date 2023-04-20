@@ -7,6 +7,13 @@ Which is built on the Mujoco physics engine. Mujoco is a powerful and flexible p
 
 Included Gripper mesh along with the servo motor mesh for making it more realistic in design.
 
+## Gripper
+In the Gripper module, I've included 4-DOF `Robotic-arm` which has two fingers to hold the objects. Along with arm, there are some random objects for testing and a `drop-box` for dropping those objects after successful grasping.
+
+Gripper Module also, has a controller code, with which you can control the `Robotic-arm` using the keyboard. Which is then adds up with a Reinforcement learning agent to learn on it's own for grasping the things and putting down in the `drop-box` mentioned before.
+
+![Gripper](Images/Gripper.png)
+
 ## Motors
 In addition to the simulation code, this repository also contains code related to servo motor controllers. Servo motors are commonly used in robotic arm systems to provide precise control over the arm's movements.
 
