@@ -71,24 +71,6 @@ class MJCar:
         glfw.set_mouse_button_callback(self.window, self.mouse_button)
         glfw.set_scroll_callback(self.window, self.scroll)
 
-    # def add_overlay(self, gridpos, text1, text2):
-    #     if gridpos not in self.overlay:
-    #         self.overlay[gridpos] = ["", ""]
-    #     self.overlay[gridpos][0] += text1 + "\n"
-    #     self.overlay[gridpos][1] += text2 + "\n"
-
-    # def ppipcreate_overlay(self, model, data):
-    #     topleft = mj.mjtGridPos.mjGRID_TOPLEFT
-    #     topright = mj.mjtGridPos.mjGRID_TOPRIGHT
-    #     bottomleft = mj.mjtGridPos.mjGRID_BOTTOMLEFT
-    #     bottomright = mj.mjtGridPos.mjGRID_BOTTOMRIGHT
-
-    #     # (mj.mjtFont.mjFONT_BIG, mj.mjmjGRID_TOPLEFT, smallrect,
-    #     #         topleftlabel.c_str(), nullptr, &this->con)
-    #     self.add_overlay(bottomleft, "Restart", 'r')
-    #     self.add_overlay(bottomleft, "Start", 's')
-    #     self.add_overlay(bottomleft, "Time", '%.2f' % data.time)
-    #     self.add_overlay(topleft, "velocity ", '%.2f' % self.velocity)
 
     def add_overlay(self, pos, text1, text2):
         font = mj.mjtFont.mjFONT_SHADOW
@@ -96,9 +78,7 @@ class MJCar:
         mj.mjr_overlay(font, pos, self.viewport, text1, text2, self.context)
 
     def add_default_overlay(self):
-        self.add_overlay("bottomleft",
-                         "\n".join(["Restart: r", "Start: s", f"Time: {self.data.time}"]),
-                         None)
+        self.add_overlay("bottomleft", "\n".join(["Restart: r", "Start: s", f"Time: {self.data.time}"]), None)
         self.add_overlay("topleft", "velocity", f"{self.velocity}")
 
     def keyboard(self, window, key, scancode, act, mods):
@@ -119,41 +99,76 @@ class MJCar:
         if key == glfw.KEY_SPACE:
             data.ctrl = np.zeros(len(data.ctrl))
 
-        # press the up arrow to start the motion and increase the speed by one unit if clicked again
-        if key == glfw.KEY_UP:
-            data.ctrl[0] += 0.1
-            # data.ctrl[1] += 0.05
-            # data.ctrl[2] += 0.05
-            # data.ctrl[3] += 0.05
-            # data.ctrl[4] += 0.05
-            # data.ctrl[5] += 0.1
-            # data.ctrl[6] += 0.1
-            # data.ctrl[7] += 0.1
 
-        # press the down arrow to decrease the speed by one unit
-        if key == glfw.KEY_DOWN:
-            data.ctrl[0] -= 0.08
-            # data.ctrl[1] -= 0.05
-            # data.ctrl[2] -= 0.05
-            # data.ctrl[3] -= 0.05
-            # data.ctrl[4] -= 0.05
-            # data.ctrl[5] -= 0.1
-            # data.ctrl[6] -= 0.1
-            # data.ctrl[7] -= 0.1
+        if (act == glfw.PRESS and key == glfw.KEY_0):
+            if key == glfw.KEY_RIGHT:
+                data.ctrl[0] += 0.1
 
-        # press the right arrow to turn the body right
-        # if key == glfw.KEY_RIGHT:
-            data.ctrl[1] += 0.1
-            # data.ctrl[3] += 0.1
-            data.ctrl[0] += 0.1
-            # data.ctrl[2] -= 1
+            if key == glfw.KEY_LEFT:
+                data.ctrl[0] -= 0.1
+        
+        if (act == glfw.PRESS and key == glfw.KEY_1):
+            if key == glfw.KEY_RIGHT:
+                data.ctrl[0] += 0.1
 
-        # press the left arrow to turn the body left
-        if key == glfw.KEY_LEFT:
-            # data.ctrl[0] -= 0.1
-            data.ctrl[2] += 0.1
-            # data.ctrl[1] -= 0.1
-            data.ctrl[3] -= 1
+            if key == glfw.KEY_LEFT:
+                data.ctrl[0] -= 0.1
+
+            
+
+        # if (act == glfw.PRESS and key == glfw.KEY_0):
+        #     print("D=0")
+        #     if act == glfw.RELEASE and  key == glfw.KEY_0:
+        #         print("0")
+        #         # # press the up arrow to start the motion and increase the speed by one unit if clicked again
+        #         # if key == glfw.KEY_UP:
+        #         #     # data.ctrl[0] += 0.1
+        #         #     data.ctrl[1] += 0.05
+        #         #     # data.ctrl[2] += 0.05
+        #         #     # data.ctrl[3] += 0.05
+        #         #     # data.ctrl[4] += 0.05
+        #         #     # data.ctrl[5] += 0.1
+        #         #     # data.ctrl[6] += 0.1
+        #         #     # data.ctrl[7] += 0.1
+
+        #         # # press the down arrow to decrease the speed by one unit
+        #         # if key == glfw.KEY_DOWN:
+        #         #     # data.ctrl[0] -= 0.08
+        #         #     data.ctrl[1] -= 0.05
+        #         #     # data.ctrl[2] -= 0.05
+        #         #     # data.ctrl[3] -= 0.05
+        #         #     # data.ctrl[4] -= 0.05
+        #         #     # data.ctrl[5] -= 0.1
+        #         #     # data.ctrl[6] -= 0.1
+        #         #     # data.ctrl[7] -= 0.1
+
+        #         # press the right arrow to turn the body right
+        #         if key == glfw.KEY_RIGHT:
+        #             # data.ctrl[1] += 0.1
+        #             # data.ctrl[3] += 0.1
+        #             data.ctrl[0] += 0.1
+        #             # data.ctrl[2] -= 1
+
+        #         # press the left arrow to turn the body left
+        #         if key == glfw.KEY_LEFT:
+        #             data.ctrl[0] -= 0.1
+        #             # data.ctrl[2] += 0.1
+        #             # data.ctrl[1] -= 0.1
+        #             # data.ctrl[3] -= 1
+
+        #     if key == glfw.KEY_1:
+        #         if key == glfw.KEY_RIGHT:
+        #             # data.ctrl[1] += 0.1
+        #             # data.ctrl[3] += 0.1
+        #             data.ctrl[0] += 0.1
+        #             # data.ctrl[2] -= 1
+
+        #         # press the left arrow to turn the body left
+        #         if key == glfw.KEY_LEFT:
+        #             data.ctrl[0] -= 0.1
+        #             # data.ctrl[2] += 0.1
+        #             # data.ctrl[1] -= 0.1
+        #             # data.ctrl[3] -= 1
 
         # press W key to show the frames in wireframe
         if key == glfw.KEY_W:
@@ -174,16 +189,6 @@ class MJCar:
 
     def controller(self, model, data):
         # put the controller here. This function is called inside the simulation
-
-        # data.ctrl[0] = velocity
-        # vx = 0
-        # vy = 0
-        # vz = velocity
-        # v = np.sqrt(vx**2+vy**2+vz**2)
-        # c = 0.5
-        # data.xfrc_applied[1][0] = -c*vx*v
-        # data.xfrc_applied[1][1] = -c*vy*v
-        # data.xfrc_applied[1][2] = -c*vz*v
         pass
 
     def mouse_button(self, window, button, act, mods):
@@ -252,13 +257,11 @@ class MJCar:
         else:
             action = mj.mjtMouse.mjMOUSE_ZOOM
 
-        mj.mjv_moveCamera(model, action, dx/height,
-                          dy/height, scene, cam)
+        mj.mjv_moveCamera(model, action, dx/height, dy/height, scene, cam)
 
     def scroll(self, window, xoffset, yoffset):
         action = mj.mjtMouse.mjMOUSE_ZOOM
-        mj.mjv_moveCamera(self.model, action, 0.0, -0.05 *
-                          yoffset, self.scene, self.camera)
+        mj.mjv_moveCamera(self.model, action, 0.0, -0.05 * yoffset, self.scene, self.camera)
 
     def start(self):
         self._init_vars()
@@ -297,15 +300,13 @@ class MJCar:
 
             # print camera configuration (help to initialize the view)
             if (self.print_camera_config):
-                print(f'cam.azimuth={cam.azimuth}, cam.elevation={cam.elevation}'
-                      f'cam.distance={cam.distance}')
+                print(f'cam.azimuth={cam.azimuth}, cam.elevation={cam.elevation}' f'cam.distance={cam.distance}')
                 print(f'cam.lookat={np.array([cam.lookat[0], cam.lookat[1],cam.lookat[2]])}')
 
             # Move the camera wrt to the body
             cam.lookat[0] = data.qpos[0]
             # Update scene and render
-            mj.mjv_updateScene(model, data, self.opt, None, cam,
-                               mj.mjtCatBit.mjCAT_ALL.value, self.scene)
+            mj.mjv_updateScene(model, data, self.opt, None, cam, mj.mjtCatBit.mjCAT_ALL.value, self.scene)
             mj.mjr_render(self.viewport, self.scene, self.context)
 
             self.add_default_overlay()
