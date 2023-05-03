@@ -252,7 +252,7 @@ class Gripper:
                 print(f'cam.lookat={np.array([cam.lookat[0], cam.lookat[1],cam.lookat[2]])}')
 
             # Move the camera wrt to the body
-            cam.lookat[0] = data.qpos[0]
+            # cam.lookat[0] = data.qpos[0]
             # Update scene and render
             mj.mjv_updateScene(model, data, self.opt, None, cam,
                                 mj.mjtCatBit.mjCAT_ALL.value, self.scene)
