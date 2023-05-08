@@ -31,6 +31,7 @@ class Gripper:
         self.velocity = 5
         self.overlay = {}
         self.window = None
+        self.joint_no = 1
         self.ov_positions = {"topleft": mj.mjtGridPos.mjGRID_TOPLEFT,
                                 "topright": mj.mjtGridPos.mjGRID_TOPRIGHT,
                                 "bottomleft": mj.mjtGridPos.mjGRID_BOTTOMLEFT,
@@ -46,7 +47,8 @@ class Gripper:
     def _init_glfw(self):
         # Init GLFW, create window, make OpenGL context current, request v-sync
         glfw.init()
-        self.window = glfw.create_window(1200, 900, "Demo", None, None)
+        # self.window = glfw.create_window(1200, 900, "Demo", None, None)
+        self.window = glfw.create_window(1920, 1200, "Demo", None, None)
         glfw.make_context_current(self.window)
         glfw.swap_interval(1)
 
@@ -54,7 +56,8 @@ class Gripper:
         # Camera configuration
         self.camera.azimuth = 89.8000000000001
         self.camera.elevation = -38.600000000000186
-        self.camera.distance = 10.77018095510105
+        # self.camera.distance = 10.77018095510105
+        self.camera.distance = 5.34838885177026
         self.camera.lookat = np.array([0.0, 0.0, 0.0])
 
     def _init_vis(self):
@@ -99,21 +102,39 @@ class Gripper:
         if key == glfw.KEY_SPACE:
             data.ctrl = np.zeros(len(data.ctrl))
 
-        # press the up arrow to raise the arm 
-        if key == glfw.KEY_UP:
-            data.ctrl[1] += 0.05
+        if key == glfw.KEY_0:
+            self.joint_no = 0
 
-        # press the down arrow for the arm to fall down
-        if key == glfw.KEY_DOWN:
-            data.ctrl[1] -= 0.05
+        if key == glfw.KEY_1:
+            self.joint_no = 1
+
+        if key == glfw.KEY_2:
+            self.joint_no = 2
+
+        if key == glfw.KEY_3:
+            self.joint_no = 3
+
+        if key == glfw.KEY_4:
+            self.joint_no = 4
+
+        if key == glfw.KEY_5:
+            self.joint_no = 5
+
+        # press the up arrow to raise the arm 
+        # if key == glfw.KEY_UP:
+        #     data.ctrl[1] += 0.05
+
+        # # press the down arrow for the arm to fall down
+        # if key == glfw.KEY_DOWN:
+        #     data.ctrl[1] -= 0.05
 
         # press the right arrow to turn the shoulder to right
         if key == glfw.KEY_RIGHT:
-            data.ctrl[0] += 0.1
+            data.ctrl[self.joint_no] += 0.1
 
         # press the left arrow to turn the shoulder to left
         if key == glfw.KEY_LEFT:
-            data.ctrl[0] -= 0.1
+            data.ctrl[self.joint_no] -= 0.1
 
         # press W key to show the frames in wireframe
         if key == glfw.KEY_W:
