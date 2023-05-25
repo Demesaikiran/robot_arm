@@ -130,11 +130,11 @@ class Gripper:
 
         # press the right arrow to turn the shoulder to right
         if key == glfw.KEY_RIGHT:
-            data.ctrl[self.joint_no] += 0.1
+            data.ctrl[self.joint_no] += 0.05
 
         # press the left arrow to turn the shoulder to left
         if key == glfw.KEY_LEFT:
-            data.ctrl[self.joint_no] -= 0.1
+            data.ctrl[self.joint_no] -= 0.05
 
         # press W key to show the frames in wireframe
         if key == glfw.KEY_W:
